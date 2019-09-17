@@ -21,26 +21,26 @@
 \end{frame}
 
 \section{Introduction}
-\subsection{Overview of existing clustering method}
+\subsection{Outlier detection and existing method}
 \begin{frame}
-\frametitle{Existing clustering method}
-\begin{figure}
-    \centering
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{pic/agglomerative.png}
-        \caption{Agglomerative method}
-    \end{subfigure}~
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{pic/bayesian.png}
-        \caption{Bayesian method}
-    \end{subfigure}
-    ~ %add desired spacing between images, e. g. ~, \quad, \qquad, \hfill etc. 
-    %(or a blank line to force the subfigure onto a new line)
-    \begin{subfigure}[b]{0.3\textwidth}
-        \includegraphics[width=\textwidth]{pic/affinity_propagation.eps}
-        \caption{Affinity propagation}
-    \end{subfigure}
-\end{figure}
+\frametitle{Outlier detection is an important area in unsupervised machine learning}
+	\begin{columns}
+		\column{5cm}
+		\begin{figure}
+			\includegraphics[width=4cm]{pic/outlier_detection_intro.png}
+		\end{figure}
+		\column{5cm}
+		\begin{align*}
+			I_{\{1\},\{2\},\{3\}}(Z_{\{1,2,3\}}) & = 3.5 \\
+			I_{\{1,3\},\{2\}}(Z_{\{1,2,3\}}) & = 2 \\ 
+			I_{\{1,2\},\{3\}}(Z_{\{1,2,3\}}) & = 6 \\ 
+			I_{\{1\},\{2,3\}}(Z_{\{1,2,3\}}) & = 6 \\ 
+			\Rightarrow I(Z_{\{1,2,3\}}) & = 2 \\
+		\end{align*}
+		\begin{equation*}
+			I(Z_{\{1,3\}}) = 5, I(Z_{\{1,2\}}) = 1
+		\end{equation*}
+	\end{columns}
 \end{frame}
 
 \begin{frame}
