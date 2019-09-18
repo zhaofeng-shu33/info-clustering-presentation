@@ -64,24 +64,36 @@
 		\caption*{ \textcolor{thupurple}{(c)} One class SVM}
 \end{figure}
 \column{0.6\textwidth}
+\quad Shortcomings:
 \begin{itemize}
-\item binary hierarchical tree only.
-\item probabilistic model
-\begin{itemize}
-\item many hyper-parameters to tune 
-\item need many reruns
-\end{itemize}
-\item many graph-based methods are not hierarchical.
+\item the number of outliers needs to known 
+\item hyperparameters matter
 \end{itemize}
 \end{columns}
 \end{frame}
 \begin{frame}
-	\frametitle{Background}
+	\frametitle{Related work}
+\begin{itemize}
+\item Cluster based method
 	\begin{enumerate}
-		\item C. Chan et al. in 2016 proposed the mathematical theory of info-clustering to cluster random variables.
-		\item A mathematical structure called principal sequence of partition [Narayanan et al. 1991] is closely related with info-clustering.
-		\item parametric maximum flow [Tarjan et al. 1989] can be used to efficiently solve the info-clustering problem.
+		\item Campello et al. in 2015 proposed a hierarchical density estimate method
+%to do outlier detection
+		\item Nagano et al in 2010 proposed a minimum average cost clustering method
+%which shares the same hierarchical clustering structure with info-clustering.
+		\item Chan C et al. in 2016 proposed info-clustering method
+%which is a hierarchical clustering method.
 	\end{enumerate}
+\item Graph partition algorithm
+\begin{enumerate}
+\item Narayanan in 1991 proposes an algorithm to compute the principal sequence of partition
+\item Kolmogorov in 2010 proposes a parametric algorithm for the same task.
+\end{enumerate}
+\end{itemize}
+Our work
+\begin{itemize}
+\item Info-Detection method
+\item Improved algorithm for principal sequence of partition
+\end{itemize}
 \end{frame}
 \subsection{Mutual similarity and its extension}
 \begin{frame}
