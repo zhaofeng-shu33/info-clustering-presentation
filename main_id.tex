@@ -71,6 +71,7 @@
 \end{itemize}
 \end{columns}
 \end{frame}
+\subsection{Related work}
 \begin{frame}
 	\frametitle{Related work}
 \begin{itemize}
@@ -95,6 +96,7 @@ Our work
 \item Improved algorithm for principal sequence of partition
 \end{itemize}
 \end{frame}
+\section{Formulation of Info-Detection}
 \subsection{Info-Clustering}
 \begin{frame}
 \frametitle{Review of Info-Clustering}
@@ -136,6 +138,7 @@ Example
 	\end{equation*}
 \end{columns}
 \end{frame}
+\subsection{Info-Detection}
 \begin{frame}
 	\frametitle{Info-Detection Method}
 \begin{itemize}
@@ -149,101 +152,125 @@ Example
 		\caption*{Info-Detection applied to 6 points on Cartesian plane, with $w_{ij} = \exp(-d_{ij}^2)$}\label{fig:ex}
 	\end{figure}
 \end{frame}
-\subsection{Examples}
-\begin{frame}{Prediction scheme for Info-Detection}
+\begin{frame}{Prediction Scheme for Info-Detection}
+For newly added node $i'$. Let $V'=B\cup \{i'\}$, we can compute $\gamma'_N$ for $G(V', E(V'))$.
+$ \gamma'_N > \gamma_N \iff i'$ is normal observation. We found that
+\begin{proposition}
+\begin{equation}
+\gamma'_N > \gamma_N \iff  \sum_{i \in B} w_{ii'} > \gamma_N 
+\end{equation}
+\end{proposition}
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{pic/outlier_boundary_illustration.eps}
+	\caption*{Detection boundary lines}	\label{fig:boundary}
+\end{figure}
 \end{frame}
-\begin{frame}
-	\begin{columns}
-		\column{4.5cm}
-	\begin{figure}
-		\centering
-		\includegraphics[width=0.8\textwidth]{pic/6point.eps}
-	\end{figure}	
-		\column{6cm}
-  	When $ x < \frac{3}{2}$		
-	\begin{equation*}
-	 \P = 
-		\begin{cases}
-			\{\{1,2,3,4,5,6\}\} & \lambda < x \\
-			\{\{1,2,3\},\{4,5,6\}\} & x \leq \lambda  < \frac{3}{2} \\
-			\{\{1\},\dots,\{6\}\} &  \lambda > \frac{3}{2}
-		\end{cases}
-	\end{equation*}
-    When	$ x = \frac{3}{2}$		
-	\begin{equation*}
-	 \P = 
-	 \begin{cases}
-	 	\{\{1,2,3,4,5,6\}\} & \lambda < \frac{3}{2} \\
-	 	\{\{1\},\dots,\{6\}\} &  \lambda \geq \frac{3}{2}
-	 \end{cases}
-	\end{equation*}	
-	When	$ x > \frac{3}{2}$
-	\begin{equation*}
-		\P = 
-		\begin{cases}
-			\{\{1,2,3,4,5,6\}\} & \lambda <  \frac{3}{2}\\
-			\{\{1,6\}, \{2\},\dots\} &  \frac{3}{2} \leq \lambda  < x\\
-				\{\{1\},\dots,\{6\}\} &  \lambda \geq x
-		\end{cases}
-	\end{equation*}				
-	\end{columns}
-\end{frame}
+
 \section{Algorithms}
 \frame{\tableofcontents[currentsection]}
-\begin{frame}
-\begin{definition}[graph cut function]
-$C$ is a subset of $V$:
+\begin{frame}{Review of Principal Sequence of Partition}
+It has been found the mathematical structure of info-clustering is the same with that of principal sequence of partition.
+\begin{definition}[Principal Sequence of Partition]
 \begin{align}
-f(C) & = \sum_{i\not\in C, j \in C, (i,j) \in E} w_{ij} \\
-f[\P] & = \sum_{C \in \P} f(C)
+h_{\P}(\lambda) &=  f[\P] - \abs{\P} \lambda  \label{eq:hPL}\\
+h(\lambda) &= \min_{\P \in \Pi'(V)} h_{\P}(\lambda) \label{eq:hLambda}
 \end{align}
+The optimal partitions $\P_1, \dots, \P_k$ for $h(\lambda)$ are nested such that $\P_1 \succeq \P_2 \dots \succeq \P_k$,  which are called principal sequence of partition (PSP) of the graph $G$.
 \end{definition}
-\begin{theorem}[Principal Sequence of Partition]
-\begin{equation}\label{eq:hLambda}
-h(\lambda) = \min_{\P \in \Pi(V)} \{ f[\P] - \abs{\P}\lambda \}
-\end{equation}
-The optimal partitions $\P_1, \dots, \P_k$ for $h(\lambda)$ are nested such that $\P_1 \succeq \P_2 \dots \succeq \P_k$, and we can obtain the hierarchical clustering tree from this sequence.
-\end{theorem}
+We call $\lambda^*$ a critical value for PSP if $\P_i, \P_{i+1}$ are both minimizer for $h(\lambda^*)$ in \eqref{eq:hLambda}.
+The largest critical value is equal to $\gamma_N$ and the largest set in $\P_{k-1}$ is equal to $B$.
 \end{frame}
 \begin{frame}
-\frametitle{Illustrative Example}
+\frametitle{Review of Narayanan's Algorithm to compute PSP}
 \begin{columns}
-\column{5cm}
+\column{0.5\textwidth}
+\algsetup{linenosize=\tiny}
+\begin{algorithm}[H]
+\caption*{Narayanan's Algorithm}\label{alg:psp}
+{\tiny
+\begin{algorithmic}[1]
+\REQUIRE a directed graph $G(V,E)$
+\ENSURE A sorted critical value array \textbf{L} and a reverse ordered array \textbf{PSP} containing $\P_1,\dots, P_k$.
+\STATE \textbf{L}  $\leftarrow$ empty list.
+\STATE $Q\leftarrow \{V\}, P \leftarrow \{ \{i \} | i \in V\}$
+\STATE $\mathbf{PSP}= [Q, P]$
+\STATE \texttt{Split}$(Q,P)$
+\STATE sort $L$ and sort $\mathbf{PSP}$ with respect to $\succeq$ 
+\FUNCTION{\texttt{Split}$(Q,P)$}
+ \STATE\label{alg:gamma} $\gamma' = {1 \over \abs{P} - \abs{Q}} (f(P)-f(Q))$
+ \STATE $h' = {1 \over \abs{P} - \abs{Q}}(\abs{P} f(Q) - \abs{Q} f(P))$
+ \STATE $(\tilde{h}, P') = \texttt{DT}(f,\gamma')$
+ \IF{$\tilde{h} = h'$}
+ 	\STATE insert $\gamma'$ to $\mathbf{L}$
+ \ELSE
+ 	\STATE insert $P'$ to $\mathbf{PSP}$
+ 	\STATE \texttt{Split}$(Q, P')$
+ 	\STATE \texttt{Split}$(P',P)$
+ \ENDIF
+\ENDFUNCTION
+\end{algorithmic}
+}
+\end{algorithm}
+The whole graph $G$ is used in each compution of \texttt{DT} routine.
+\column{0.5\textwidth}
 \begin{figure}
-\includegraphics[width=5cm]{pic/dt.eps}
-\caption{piecewise linear function $h(\gamma)$}
+\includegraphics[width=4.5cm]{pic/dt_with_graph.eps}
 \end{figure}
-\column{5cm}
-\begin{align*}
-h(\lambda)  & = \min_{\P} h_{\lambda}(\P) \\
-h_{\lambda}(\P) & = f[\P] - \abs{\P}\lambda
-\end{align*}
 \begin{align*}
 \P_0  & = \{\{1,2,3\}\} \\
 \P_1  & = \{\{1,3\},\{2\}\} \\
 \P_2  & = \{\{1\},\{2\},\{3\}\} 
 \end{align*}
-
 \end{columns}
 \end{frame}
 \begin{frame}
+\frametitle{Improved PSP Algorithm}
 \begin{columns}
-\column{4cm}
-\begin{figure}[!ht]
-\centering
-\includegraphics[width=4cm]{pic/pdt.eps}
-\caption{pyramid structure of graph-based info-clustering algorithm}\label{fig:ps}
+\column{0.5\textwidth}
+\vskip -1.2em
+\algsetup{linenosize=\tiny}
+\begin{algorithm}[H]
+\caption*{{\footnotesize Improved PSP Algorithm}}
+{\tiny
+	\begin{algorithmic}[1]
+		\REQUIRE a directed graph $G(V, E)$
+		\ENSURE a hierarchical tree $\mathcal{T}(K, E)$ where $K \subseteq 2^{V}$ is node set and $E$ is edge set.
+		\STATE initialize tree $\mathcal{T}$ with $V$ as root node, $\{j\}(j\leq \abs{V})$ as leaf node and no stem node.
+		\STATE \texttt{Split}($G, V$)
+		\FUNCTION{\texttt{Split}($\widetilde{G}, \widetilde{V}$)}
+		\STATE $w$ is the summation of all edge weights of $\widetilde{G}$ 
+		\STATE $\gamma' = \frac{w}{\abs{V(\widetilde{G})}-1}$ where $V(\widetilde{G})$ is node set of graph $\widetilde{G}$ \label{alg:gamma_apostrophe}
+		\STATE $(\tilde{h}, P') = \texttt{DT}(\widetilde{G}, \gamma')$ 
+		\IF{$\tilde{h} = - \gamma'$}
+		\STATE add edge weight $\gamma'$ in $\mathcal{T}$ starting from $\widetilde{V}$ to its children.
+		\ELSE
+		\FOR{$S$ in $P'$ and $\abs{S}>1$}
+		\STATE make children of $\widetilde{V}$ in $\mathcal{T}$ have new parent $S$		
+		\STATE make the parent of $S$ be $\widetilde{V}$
+		\STATE \texttt{Split}($\widetilde{G}[S], S$) where $\widetilde{G}[S]$ is the subgraph of $\widetilde{G}$ restricted on $S$
+		\STATE contract $S$ to a single node in $\widetilde{G}$ % graph \widetilde{G} is modified
+		\ENDFOR 
+		\STATE \texttt{Split}($\widetilde{G}, \widetilde{V}$)		
+		\ENDIF
+		\ENDFUNCTION
+	\end{algorithmic}
+}
+\end{algorithm}
+\vskip -1.2em
+Smaller graph $G$ is used in each compution of \texttt{DT} routine.
+\column{0.5\textwidth}
+\begin{figure}
+\includegraphics[width=4.5cm]{pic/dt_with_graph.eps}
 \end{figure}
-\column{6cm}
-\begin{enumerate}
-\item parametric Dilworth truncation: $\min \{f[\P] -\lambda \abs{\P}\}$
-\item parametric maximum flow: $\min_{t\in C} \{f(C) - \lambda - y^{\lambda}(C)\}$
-\item maximum flow
-\end{enumerate}
-Achievable time complexity: $\abs{V}^3 \sqrt{\abs{E}}$
-% For push-relabel algorithm, \mathrm{MF}(G(V,E)) = \abs{V}^2 E
+\begin{align*}
+\P_0  & = \{\{1,2,3\}\} \\
+\P_1  & = \{\{1,3\},\{2\}\} \\
+\P_2  & = \{\{1\},\{2\},\{3\}\} 
+\end{align*}
 \end{columns}
 \end{frame}
+
 \begin{frame}
 	\frametitle{Solving $\min_{t\in C} \{f(C) - \lambda - y^{\lambda}(C)\}$}
 	\begin{columns}
