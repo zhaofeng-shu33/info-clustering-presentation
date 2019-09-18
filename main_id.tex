@@ -276,22 +276,29 @@ Time complexity for dense graph
 \begin{frame}
 	\frametitle{Empirical Comparison for three implementation of PSP}
 \end{frame}
-\section{Experiment Result}
+\section{Experimental Results}
 \begin{frame}
 	\frametitle{Experimental Results}
 \begin{table}
 \centering
-{\scriptsize
 \begin{tabular}{ccccc}
 \hline
-       Property        &  GaussianBlob   &      Moon       &  Lymphography  &     Glass     \\
+              &  GaussianBlob   &      Moon       &  Lymphography  &     Glass     \\
 \hline
-   Origin    & artificial & artificial & real-world & real-world \\
+   Type    & artificial & artificial & real-world & real-world \\
    N(Inliers) & 255  & 300 & 142  & 207 \\
    N(outliers)   & 45 &  45  & 6 & 7 \\
    N(features)   & 2 &  2  & 19 & 7  \\
 \hline
 \end{tabular}
+\end{table}
+\begin{itemize}
+\item True Positive Rate (TPR)  $=\frac{N(\textrm{detected inliers})}{N(\textrm{inliners})} \geq 90\% $
+\item True Negative Rate (TNR) $=\frac{N(\textrm{detected outliers})}{N(\textrm{outliers})}$
+\end{itemize}
+\begin{table}
+\centering
+{\scriptsize
 \input{id_compare.tex}
 }
 \end{table}
@@ -301,9 +308,9 @@ Time complexity for dense graph
 \begin{frame}
 \frametitle{Conclusion}
 \begin{itemize}
-\item propose graph-based info-clustering method
-\item propose a parametric computing scheme to get the hierarchical structure of given graph 
-\item apply graph-based info-clustering to cluster dataset and find structure of community
+\item Formulate Info-Detection method
+\item Propose improved principal sequence of partition algorithm 
+\item Demonstrate Info-Detection performs well on some datasets
 \end{itemize}
 \end{frame}
 \section*{Reference}
