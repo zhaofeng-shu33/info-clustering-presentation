@@ -77,17 +77,17 @@
 \begin{itemize}
 \item Cluster based method
 	\begin{enumerate}
-		\item Campello et al. in 2015 proposed a hierarchical density estimate method
+		\item Campello et al. in 2015 proposed a hierarchical density estimate method \cite{RN432}
 %to do outlier detection
-		\item Nagano et al in 2010 proposed a minimum average cost clustering method
+		\item Nagano et al in 2010 proposed a minimum average cost clustering method \cite{mac}
 %which shares the same hierarchical clustering structure with info-clustering.
-		\item Chan C et al. in 2016 proposed info-clustering method
+		\item Chan C et al. in 2016 proposed info-clustering method \cite{ic}
 %which is a hierarchical clustering method.
 	\end{enumerate}
 \item Graph partition algorithm
 \begin{enumerate}
-\item Narayanan in 1991 proposes an algorithm to compute the principal sequence of partition
-\item Kolmogorov in 2010 proposes a parametric algorithm for the same task.
+\item Narayanan in 1991 proposes an algorithm to compute the principal sequence of partition \cite{psp}
+\item Kolmogorov in 2010 proposes a parametric algorithm for the same task \cite{pmf}
 \end{enumerate}
 \end{itemize}
 Our work
@@ -278,7 +278,7 @@ Time complexity for dense graph
 \end{frame}
 \section{Experiment Result}
 \begin{frame}
-	\frametitle{Experiment Result}
+	\frametitle{Experimental Results}
 \begin{table}
 \centering
 {\scriptsize
@@ -306,20 +306,13 @@ Time complexity for dense graph
 \item apply graph-based info-clustering to cluster dataset and find structure of community
 \end{itemize}
 \end{frame}
-\section{Reference}
+\section*{Reference}
 \begin{frame}
 \frametitle{Reference}
-\begin{thebibliography}{9}
-\bibitem{ic} Chung Chan, \newblock Info-Clustering: A Mathematical Theory for Data Clustering
-\newblock  IEEE Transactions on Molecular, Biological and Multi-Scale Communications, June 2016
-\bibitem{pin}  Chung Chan, \newblock Info-Clustering: An Efficient Algorithm by Network Information Flow
-\newblock 2017 Information Theory and Applications Workshop (ITA)
-\bibitem{mac} Kiyohito Nagano \newblock Minimum Average Cost Clustering \newblock NIPS 2010
-\bibitem{RN4}
-Vladimir Kolmogorov.
-\newblock A faster algorithm for computing the principal sequence of partitions
-of a graph.
-\newblock {\em Algorithmica}, 56(4):394--412, 2010.
-\end{thebibliography}
+\setbeamertemplate{bibliography item}[triangle]
+\bibliographystyle{plain}
+{\scriptsize
+\bibliography{id}
+}
 \end{frame}
 \end{document}
