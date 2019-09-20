@@ -2,6 +2,7 @@
 \usetheme{Lab2C}
 \usepackage{graphicx}
 \usepackage{subcaption}
+\usepackage[square,sort,comma,numbers]{natbib}
 \input{macros.tex}
 \newif\ifbeamer
 \beamertrue
@@ -66,7 +67,7 @@
 \column{0.6\textwidth}
 \quad Shortcomings:
 \begin{itemize}
-\item the number of outliers needs to known 
+\item provide the number of outliers
 \item hyperparameters matter
 \end{itemize}
 \end{columns}
@@ -77,17 +78,17 @@
 \begin{itemize}
 \item Cluster based method
 	\begin{enumerate}
-		\item Campello et al. in 2015 proposed a hierarchical density estimate method \cite{RN432}
+		\item \citeauthor{de} in \citeyear{de} proposed a hierarchical density estimate method 
 %to do outlier detection
-		\item Nagano et al in 2010 proposed a minimum average cost clustering method \cite{mac}
+		\item \citeauthor{mac} in \citeyear{mac} proposed a minimum average cost clustering method 
 %which shares the same hierarchical clustering structure with info-clustering.
-		\item Chan C et al. in 2016 proposed info-clustering method \cite{ic}
+		\item \citeauthor{ic} in \citeyear{ic} proposed info-clustering method
 %which is a hierarchical clustering method.
 	\end{enumerate}
 \item Graph partition algorithm
 \begin{enumerate}
-\item Narayanan in 1991 proposes an algorithm to compute the principal sequence of partition \cite{psp}
-\item Kolmogorov in 2010 proposes a parametric algorithm for the same task \cite{pmf}
+\item \citeauthor{psp} in \citeyear{psp} proposed an algorithm to compute the principal sequence of partition 
+\item \citeauthor{pmf} in \citeyear{pmf} proposed a parametric algorithm for the same task 
 \end{enumerate}
 \end{itemize}
 Our work
@@ -212,7 +213,7 @@ The largest critical value is equal to $\gamma_N$ and the largest set in $\P_{k-
 \end{algorithmic}
 }
 \end{algorithm}
-The whole graph $G$ is used in each compution of \texttt{DT} routine.
+The whole graph $G$ is used in each computation of \texttt{DT} routine.
 \column{0.5\textwidth}
 Example
 \begin{figure}
@@ -259,7 +260,7 @@ Example
 }
 \end{algorithm}
 \vskip -1.2em
-Smaller graph $G$ is used in each compution of \texttt{DT} routine.
+Smaller graph $G$ is used in each computation of \texttt{DT} routine.
 \column{0.5\textwidth}
 Example
 \begin{figure}
@@ -339,7 +340,7 @@ Time complexity for dense graph
 \begin{frame}
 \frametitle{Reference}
 \setbeamertemplate{bibliography item}[triangle]
-\bibliographystyle{plain}
+\bibliographystyle{plainnat}
 {\scriptsize
 \bibliography{id}
 }
